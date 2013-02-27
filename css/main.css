@@ -4,6 +4,15 @@
    Author's custom styles
    ========================================================================== */
 
+dt {
+    text-transform: uppercase;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+dd {
+    margin-bottom: 10px;
+}
 
 .editor-pane {}
 

@@ -47,7 +47,12 @@
                             <li class=""><a href="javascript:window.location.href='#';window.location.reload(true);">New document</a></li>
                         </ul>
                         <ul class="nav pull-right">
-                            <li><a href="#about" data-toggle="modal">About</a></li>
+                            <li class="">
+                                <a href="#help" data-toggle="modal">Help</a>
+                            </li>
+                            <li class="">
+                                <a href="#about" data-toggle="modal">About</a>
+                            </li>
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -108,7 +113,51 @@ echo 'Hello world';</textarea>
 
         </div> <!-- /container -->
 
-        <!-- Modal -->
+        <!-- Modals -->
+        <div id="help" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="helpLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="helpLabel">Help</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+                <h4>Sandbox</h4>
+                <p>
+                    All code is executed in a <a href='http://en.wikipedia.org/wiki/Sandbox_(software_development)'>sandbox</a>, hence the PHP environment may be different than you're used to and we restricted the use of some functions (see below).
+                </p>
+                <h4 id='environment'>Environment</h4>
+                <dl>
+                    <dt>file access</dt>
+                    <dd>The open_basedir directive is set and you can read and write to only one directory: <code><?php echo realpath('tmp' . DIRECTORY_SEPARATOR); ?></code></dd>
+
+                    <dt>http</dt>
+                    <dd>Your code is not executed in a <a href='http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol'>HTTP context</a>, so global variables such as <code>$_GET</code>, <code>$_POST</code>, <code>$_COOKIE</code> and <code>$_SESSION</code> are unavailable.</dd>
+                </dl>
+                <h4 id='restricted'>Unavailable function</h4>
+                <ul>
+                    <li>exec()</li>
+                    <li>passthru()</li>
+                    <li>shell_exec()</li>
+                    <li>system()</li>
+                    <li>proc_open()</li>
+                    <li>popen()</li>
+                    <li>curl_exec()</li>
+                    <li>curl_multi_exec()</li>
+                    <li>parse_ini_file()</li>
+                    <li>show_source()</li>
+                    <li>pcntl_fork()</li>
+                    <li>pcntl_exec()</li>
+                    <li>session_start()</li>
+                    <li>phpinfo()</li>
+                    <li>ini_set()</li>
+                <ul>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          </div>
+        </div>
+
         <div id="about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="aboutLabel" aria-hidden="true">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -116,14 +165,18 @@ echo 'Hello world';</textarea>
           </div>
           <div class="modal-body">
             <p>
-                Created by <a href="http://nabble.nl">Nabble</a> because the <a href="http://php.net/manual/en/features.commandline.interactive.php">interactive PHP
-                shell</a> wasn't HTML5 enough for us.
+                phpTyper is like a <a href='http://en.wikipedia.org/wiki/WYSIWYG'>WYSISYG</a> editor for the <a href='http://en.wikipedia.org/wiki/PHP'>PHP programming language</a>.
+                It is created by web developers at <a href="http://nabble.nl">Nabble</a> because the <a href="http://php.net/manual/en/features.commandline.interactive.php">interactive PHP
+                shell</a> wasn't HTML5 enough for them.
             </p>
             <p>
                 Front-end created using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>, <a href="http://codemirror.net/">CodeMirror</a> and <a href="http://jonnystromberg.com/hash-js">hash.js</a>.
+                The execution environment uses parts of <a href="https://github.com/fregster/PHPSandbox">PHPSandbox</a>.
             </p>
             <p>
-                The execution environment uses parts of <a href="https://github.com/fregster/PHPSandbox">PHPSandbox</a>.
+                <a class='btn btn-info' href="#help" data-dismiss="modal" data-toggle="modal">
+                    Show me the help page
+                </a>
             </p>
           </div>
           <div class="modal-footer">
