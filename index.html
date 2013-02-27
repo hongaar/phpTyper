@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>phpTyper</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <style>
+            body {
+                padding-top: 60px;
+            }
+        </style>
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
+
+        <link rel="stylesheet" href="js/vendor/codemirror-3.1/lib/codemirror.css">
+        <link rel="stylesheet" href="js/vendor/codemirror-3.1/theme/monokai.css">
+        <link rel="stylesheet" href="js/vendor/codemirror-3.1/addon/dialog/dialog.css">
+
+        <link rel="stylesheet" href="css/main.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+
+        <!-- This code is taken from http://twitter.github.com/bootstrap/examples/hero.html -->
+
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="#">phpTyper</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li><a href="#about" data-toggle="modal">About</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="span6">
+                    <fieldset>
+                        <legend>Start typing</legend>
+                    </fieldset>
+                    <div class='editor-pane'>
+                        <form>
+                            <div class='editor'>
+                                <textarea name='code'>
+&lt;?php
+echo 'Hello world!';</textarea>
+                            </div>
+                            <div class='toolbar'>
+                                <button type="submit" class="btn btn-inverse">Run &raquo;</button>
+                                <span>Ctrl+Enter</span>
+                                <label class="checkbox">
+                                    <input type="checkbox" checked> Autorun
+                                </label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="span6">
+                    <fieldset>
+                        <legend>Output</legend>
+                    </fieldset>
+                    <div class='output-pane'>
+                        <div class='alert alert-block alert-error fade'>
+                            <h4 class="alert-heading">Oh snap! You got an error!</h4>
+                            <p>
+                                And nothing explains it
+                            </p>
+                        </div>
+                        <div class='loading'>
+                            <div id="movingBallG">
+                                <div class="movingBallLineG"></div>
+                                <div id="movingBallG_1" class="movingBallG"></div>
+                            </div>
+                        </div>
+                        <div class='output'></div>
+                    </div>
+               </div>
+            </div>
+
+        </div> <!-- /container -->
+
+        <!-- Modal -->
+        <div id="about" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="aboutLabel" aria-hidden="true">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="aboutLabel">About phpTyper</h3>
+          </div>
+          <div class="modal-body">
+            <p>
+                Created by <a href="http://nabble.nl">Nabble</a> because the <a href="http://php.net/manual/en/features.commandline.interactive.php">interactive PHP
+                shell</a> wasn't HTML5 enough for us.
+            </p>
+            <p>
+                Front-end created using <a href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a>, <a href="http://codemirror.net/">CodeMirror</a> and <a href="http://jonnystromberg.com/hash-js">hash.js</a>.
+            </p>
+            <p>
+                The execution environment uses parts of <a href="https://github.com/fregster/PHPSandbox">PHPSandbox</a>.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          </div>
+        </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/vendor/codemirror-3.1/lib/codemirror.js"></script>
+        <script src="js/vendor/codemirror-3.1/addon/edit/matchbrackets.js"></script>
+        <script src="js/vendor/codemirror-3.1/addon/selection/active-line.js"></script>
+        <script src="js/vendor/codemirror-3.1/addon/dialog/dialog.js"></script>
+        <script src="js/vendor/codemirror-3.1/addon/search/searchcursor.js"></script>
+        <script src="js/vendor/codemirror-3.1/addon/search/search.js"></script>
+        <script src="js/vendor/codemirror-3.1/addon/search/match-highlighter.js"></script>
+
+        <script src="js/vendor/codemirror-3.1/mode/htmlmixed/htmlmixed.js"></script>
+        <script src="js/vendor/codemirror-3.1/mode/xml/xml.js"></script>
+        <script src="js/vendor/codemirror-3.1/mode/javascript/javascript.js"></script>
+        <script src="js/vendor/codemirror-3.1/mode/css/css.js"></script>
+        <script src="js/vendor/codemirror-3.1/mode/clike/clike.js"></script>
+        <script src="js/vendor/codemirror-3.1/mode/php/php.js"></script>
+
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+        <script>
+            var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+    </body>
+</html>

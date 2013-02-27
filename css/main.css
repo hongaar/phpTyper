@@ -1,0 +1,241 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+
+.editor-pane {}
+
+    .editor-pane form {
+        margin: 0;
+    }
+
+    .editor-pane .editor {}
+
+        .editor-pane .editor textarea {
+            opacity: 0;
+            width: 100%;
+        }
+
+        .editor-pane .editor .CodeMirror {
+            min-height: 200px;
+        }
+
+            .CodeMirror-focused .cm-matchhighlight {
+                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
+                background-position: bottom;
+                background-repeat: repeat-x;
+            }
+
+            .CodeMirror-activeline-background {
+                background: #000 !important;
+            }
+
+            .CodeMirror .error,
+            .error .CodeMirror-activeline-background {
+                background: #f00 !important;
+            }
+
+            .CodeMirror .error * {
+                color: white !important;
+            }
+
+    .editor-pane .toolbar {
+        margin-top: 15px;
+    }
+
+        .editor-pane .toolbar button {
+            float: right;
+        }
+
+        .editor-pane .toolbar span {
+            float: right;
+            padding-top: 5px;
+            padding-right: 20px;
+            color: gray;
+        }
+
+        .editor-pane .toolbar label {
+            padding-top: 5px;
+            color: gray;
+        }
+
+.output-pane {
+    position: relative;
+}
+
+    .output-pane iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+
+    .output-pane .alert {
+        position: absolute;
+        right: 0;
+        left: 0;
+    }
+
+    .output-pane .loading {
+        display: none;
+    }
+
+        .output-pane .loading #movingBallG {
+            margin: 0 auto;
+        }
+
+
+
+
+/* ==========================================================================
+   Author's media queries
+   ========================================================================== */
+
+
+@media (max-width: 767px) {
+    .editor-pane form {
+        margin-bottom: 60px;
+    }
+
+
+}
+
+@media (max-width: 979px) {
+    .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
+        padding: 0 20px;
+    }
+}
+
+
+
+
+
+
+/* ==========================================================================
+   CSS3 loading thingy from http://cssload.net/
+   ========================================================================== */
+
+#movingBallG{
+position:relative;
+width:205px;
+height:16px;
+}
+
+.movingBallLineG{
+position:absolute;
+left:0px;
+top:6px;
+height:3px;
+width:205px;
+background-color:#FFFFFF;
+}
+
+.movingBallG{
+background-color:#000000;
+position:absolute;
+top:0;
+left:0;
+width:16px;
+height:16px;
+-moz-border-radius:8px;
+-moz-animation-name:bounce_movingBallG;
+-moz-animation-duration:0.6s;
+-moz-animation-iteration-count:infinite;
+-moz-animation-direction:linear;
+-webkit-border-radius:8px;
+-webkit-animation-name:bounce_movingBallG;
+-webkit-animation-duration:0.6s;
+-webkit-animation-iteration-count:infinite;
+-webkit-animation-direction:linear;
+-ms-border-radius:8px;
+-ms-animation-name:bounce_movingBallG;
+-ms-animation-duration:0.6s;
+-ms-animation-iteration-count:infinite;
+-ms-animation-direction:linear;
+-o-border-radius:8px;
+-o-animation-name:bounce_movingBallG;
+-o-animation-duration:0.6s;
+-o-animation-iteration-count:infinite;
+-o-animation-direction:linear;
+border-radius:8px;
+animation-name:bounce_movingBallG;
+animation-duration:0.6s;
+animation-iteration-count:infinite;
+animation-direction:linear;
+}
+
+@-moz-keyframes bounce_movingBallG{
+0%{
+left:0px;
+}
+
+50%{
+left:189px;
+}
+
+100%{
+left:0px;
+}
+
+}
+
+@-webkit-keyframes bounce_movingBallG{
+0%{
+left:0px;
+}
+
+50%{
+left:189px;
+}
+
+100%{
+left:0px;
+}
+
+}
+
+@-ms-keyframes bounce_movingBallG{
+0%{
+left:0px;
+}
+
+50%{
+left:189px;
+}
+
+100%{
+left:0px;
+}
+
+}
+
+@-o-keyframes bounce_movingBallG{
+0%{
+left:0px;
+}
+
+50%{
+left:189px;
+}
+
+100%{
+left:0px;
+}
+
+}
+
+@keyframes bounce_movingBallG{
+0%{
+left:0px;
+}
+
+50%{
+left:189px;
+}
+
+100%{
+left:0px;
+}
+
+}
