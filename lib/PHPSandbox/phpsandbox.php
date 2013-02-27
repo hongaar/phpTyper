@@ -84,7 +84,7 @@ class PHPSandbox {
 
 		$this->tempPath = $this->sys_get_temp_dir().DIRECTORY_SEPARATOR;
 
-		if(PHP_VERSION >= 5.4){
+		if(PHP_VERSION >= 5.3){
 			$this->options['safe_mode'] = false;
 		}
 
