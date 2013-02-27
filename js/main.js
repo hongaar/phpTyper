@@ -11,49 +11,57 @@ $(document).ready(function() {
 var phpTyper = function() {
 
     // Cache
-    var $textarea = $('.editor textarea');
+    var $editor = $('#editor');
     var $output = $('.output');
     var $autorun = $('.editor-pane .toolbar label input');
 
     var doNotUpdateOutput = false;
     var h;
     var activeLine;
+    var errorLine;
     var dirty = false;
     var loading;
 
-    // CodeMirror
-    var codeEditor = CodeMirror.fromTextArea($textarea[0], {
+    // Abort all AJAX events
+    $.xhrPool = [];
+    $.xhrPool.abortAll = function() {
+        $(this).each(function(idx, jqXHR) {
+            jqXHR.abort();
+        });
+        $.xhrPool.length = 0
+    };
 
-        theme                   : 'monokai',
-
-        indentUnit              : 4,
-        indentWithTabs          : true,
-        enterMode               : "keep",
-        tabMode                 : "shift",
-
-        styleActiveLine         : true,
-        showCursorWhenSelecting : true,
-        highlightSelectionMatches: true,
-        autofocus               : true,
-
-        lineNumbers             : true,
-        matchBrackets           : true,
-        mode                    : "application/x-httpd-php",
-
+    $.ajaxSetup({
+        beforeSend: function(jqXHR) {
+            $.xhrPool.push(jqXHR);
+        },
+        complete: function(jqXHR) {
+            var index = $.xhrPool.indexOf(jqXHR);
+            if (index > -1) {
+                $.xhrPool.splice(index, 1);
+            }
+        }
     });
 
+    // Ace
+    var editor = ace.edit('editor');
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/php");
+
     setTimeout(function() {
-        codeEditor.on('change', function(instance, changeObj) {
-            if (changeObj.text[0] !== '') {
+        var noDirtyChars = "\n|\t| ".split('|');
+        editor.getSession().on('change', function(e) {
+            if ((e.data.action === 'insertText' || e.data.action === 'removeText') && $.inArray(e.data.text, noDirtyChars) === -1) {
                 setDirty(true);
                 clearErrorLine();
             }
         });
     }, 5000);
 
-    codeEditor.on('cursorActivity', function() {
-        if (activeLine !== codeEditor.getCursor().line) {
-            activeLine = codeEditor.getCursor().line;
+    editor.getSession().selection.on('changeCursor', function(e) {
+        var row = editor.selection.getCursor().row;
+        if (activeLine !== row) {
+            activeLine = row;
             if (dirty === true && $autorun.is(':checked')) {
                 runFromEditor();
             }
@@ -70,8 +78,7 @@ var phpTyper = function() {
     $(window).on("debouncedresize", function(e) {
         var viewportHeight = $(window).height();
         // editor
-        codeEditor.setSize('100%', (viewportHeight - 180) + 'px');
-        codeEditor.refresh();
+        $editor.css({height: (viewportHeight - 180) + 'px'});
         // output
         $output.css({height: (viewportHeight - 180) + 'px' });
     }).trigger('debouncedresize');
@@ -130,7 +137,7 @@ var phpTyper = function() {
             showAlert('Code not found', 'Open a new document to get started');
         } else {
             hideLoading();
-            showAlert('Something went wrong with your request', 'Please try again later');
+            // showAlert('Something went wrong with your request', 'Please try again later');
         }
     });
 
@@ -165,7 +172,8 @@ var phpTyper = function() {
             addHistory(h);
         }
         if (data.code) {
-            codeEditor.setValue(atob(data.code));
+            editor.setValue(atob(data.code));
+            editor.gotoLine(0);
         }
         if (data.time) {
             $('span.time').text(data.time + 'ms');
@@ -173,16 +181,17 @@ var phpTyper = function() {
         createIframe($output, atob(data.output));
     };
 
+
     var clearErrorLine = function() {
-        codeEditor.eachLine(function(line) {
-            codeEditor.removeLineClass(line, 'wrap', 'error');
-        });
-        codeEditor.refresh();
+        editor.getSession().removeMarker(errorLine);
     };
 
+
     var setErrorLine = function(line) {
-        codeEditor.addLineClass(line - 1, 'wrap', 'error');
-        codeEditor.refresh();
+        // debugger;
+        var r = ace.require('ace/range').Range;
+        theRange = new r(line - 1, 0, line, 0);
+        errorLine = editor.getSession().addMarker(theRange, "ace_active_line warning", "background");
     };
 
     var runFromEditor = function() {
@@ -190,14 +199,16 @@ var phpTyper = function() {
         hideAlert();
         clearErrorLine();
         showLoading();
-        var code = codeEditor.getValue();
+        var code = editor.getValue();
         var data = { code: code, hash: h };
+        $.xhrPool.abortAll();
         $.getJSON('run.php', data, setOutput);
     };
 
     var runFromHash = function() {
         showLoading();
         var data = { hash: h };
+        $.xhrPool.abortAll();
         $.getJSON('run.php', data, setOutput);
     }
 
@@ -219,7 +230,7 @@ var phpTyper = function() {
     var checkHashAndRefresh = function() {
         if (typeof(hash.get('h')) !== 'undefined') {
             h = hash.get('h');
-            codeEditor.setValue('');
+            editor.setValue("");
             runFromHash();
         }
     };

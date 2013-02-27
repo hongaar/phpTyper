@@ -17,11 +17,6 @@
             }
         </style>
         <link rel="stylesheet" href="css/bootstrap-responsive.min.css">
-
-        <link rel="stylesheet" href="js/vendor/codemirror-3.1/lib/codemirror.css">
-        <link rel="stylesheet" href="js/vendor/codemirror-3.1/theme/monokai.css">
-        <link rel="stylesheet" href="js/vendor/codemirror-3.1/addon/dialog/dialog.css">
-
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
@@ -83,12 +78,11 @@
                     </fieldset>
                     <div class='editor-pane'>
                         <form>
-                            <div class='editor'>
-                                <textarea name='code'>
-&lt;pre&gt;
+                            <div class='editor-container'>
+                                <div name='code' id='editor'>&lt;pre&gt;
 &lt;?php
 
-echo 'Hello world';</textarea>
+echo 'Hello world';</div>
                             </div>
                             <div class='toolbar'>
                                 <button type="submit" class="btn btn-inverse">Run &raquo;</button>
@@ -203,20 +197,7 @@ echo 'Hello world';</textarea>
 
         <script src="js/vendor/bootstrap.min.js"></script>
 
-        <script src="js/vendor/codemirror-3.1/lib/codemirror.js"></script>
-        <script src="js/vendor/codemirror-3.1/addon/edit/matchbrackets.js"></script>
-        <!--<script src="js/vendor/codemirror-3.1/addon/selection/active-line.js"></script>
-        <script src="js/vendor/codemirror-3.1/addon/dialog/dialog.js"></script>
-        <script src="js/vendor/codemirror-3.1/addon/search/searchcursor.js"></script>
-        <script src="js/vendor/codemirror-3.1/addon/search/search.js"></script>
-        <script src="js/vendor/codemirror-3.1/addon/search/match-highlighter.js"></script>-->
-
-        <script src="js/vendor/codemirror-3.1/mode/htmlmixed/htmlmixed.js"></script>
-        <script src="js/vendor/codemirror-3.1/mode/xml/xml.js"></script>
-        <script src="js/vendor/codemirror-3.1/mode/javascript/javascript.js"></script>
-        <script src="js/vendor/codemirror-3.1/mode/css/css.js"></script>
-        <script src="js/vendor/codemirror-3.1/mode/clike/clike.js"></script>
-        <script src="js/vendor/codemirror-3.1/mode/php/php.js"></script>
+        <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>

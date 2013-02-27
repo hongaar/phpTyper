@@ -4,6 +4,10 @@
    Author's custom styles
    ========================================================================== */
 
+.navbar .nav > li > a {
+    text-shadow: none;
+}
+
 dt {
     text-transform: uppercase;
     font-weight: normal;
@@ -14,43 +18,27 @@ dd {
     margin-bottom: 10px;
 }
 
-.editor-pane {}
+.editor-pane {
+    position: relative;
+}
 
     .editor-pane form {
         margin: 0;
     }
 
-    .editor-pane .editor {}
+    .editor-pane .editor-container {
+        position: relative;
+    }
 
-        .editor-pane .editor textarea {
-            opacity: 0;
+        #editor {
+            position: relative;
             width: 100%;
-        }
-
-        .editor-pane .editor .CodeMirror {
             min-height: 200px;
-            background-color: black;
         }
 
-            .CodeMirror-focused .cm-matchhighlight {
-                /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
-                background-position: bottom;
-                background-repeat: repeat-x;*/
-                background-color: rgba(24,24,128,0.4);
-            }
-
-            .CodeMirror-activeline-background {
-                background: #000 !important;
-            }
-
-            .CodeMirror .error,
-            .error .CodeMirror-activeline-background {
-                background: #ff0039 !important;
-            }
-
-            .CodeMirror .error * {
-                color: white !important;
-            }
+        #editor.ace-monokai .ace_marker-layer .ace_active_line.warning {
+            background-color: rgb(111, 0, 25) !important;
+        }
 
     .editor-pane .toolbar {
         margin-top: 15px;
