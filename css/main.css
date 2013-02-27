@@ -62,6 +62,12 @@
             color: gray;
         }
 
+legend span.time {
+    float: right;
+    color: gray;
+    font-size: 0.6em;
+}
+
 .output-pane {
     position: relative;
 }

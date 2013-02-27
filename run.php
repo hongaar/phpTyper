@@ -114,6 +114,7 @@ function getDocStyle() {
 
     function error($error) {
         global $hash, $code;
+
         $return = array(
             'hash' => $hash,
             'error' => $error,
@@ -135,9 +136,11 @@ function getDocStyle() {
     }
 
     function write($output) {
-        global $hash, $code;
+        global $hash, $code, $sandbox;
+
         $return = array(
             'hash' => $hash,
+            'time' => $sandbox->runTime(),
             'output' => base64_encode($output)
         );
         if (!isset($_GET['code'])) {

@@ -140,6 +140,9 @@ $(document).ready(function() {
         if (data.code) {
             codeEditor.setValue(atob(data.code));
         }
+        if (data.time) {
+            $('span.time').text(data.time + 'ms');
+        }
         createIframe($output, atob(data.output));
     };
 
