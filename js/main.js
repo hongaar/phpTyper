@@ -14,6 +14,8 @@ var phpTyper = function() {
     var $textarea = $('.editor textarea');
     var $output = $('.output');
     var $autorun = $('.editor-pane .toolbar label input');
+
+    var doNotUpdateOutput = false;
     var h;
     var activeLine;
     var dirty = false;
@@ -123,7 +125,11 @@ var phpTyper = function() {
                     height: ($output.height() - alertHeight) + 'px'
                 });
             }
+        } else if (jqXHR.status === 404) {
+            hideLoading();
+            showAlert('Code not found', 'Open a new document to get started');
         } else {
+            hideLoading();
             showAlert('Something went wrong with your request', 'Please try again later');
         }
     });
@@ -154,7 +160,9 @@ var phpTyper = function() {
         hideLoading();
         if (typeof(hash.get('h')) === 'undefined') {
             h = data.hash;
+            doNotUpdateOutput = true;
             hash.add({ h: h });
+            addHistory(h);
         }
         if (data.code) {
             codeEditor.setValue(atob(data.code));
@@ -208,10 +216,60 @@ var phpTyper = function() {
     });
 
     // refresh?
-    if (typeof(hash.get('h')) !== 'undefined') {
-        h = hash.get('h');
-        codeEditor.setValue('');
-        runFromHash();
+    var checkHashAndRefresh = function() {
+        if (typeof(hash.get('h')) !== 'undefined') {
+            h = hash.get('h');
+            codeEditor.setValue('');
+            runFromHash();
+        }
+    };
+    checkHashAndRefresh();
+
+    // local history
+    var history;
+
+    $(window).on('hashchange', function() {
+        if (!doNotUpdateOutput) {
+            checkHashAndRefresh();
+        } else {
+            doNotUpdateOutput = false;
+        }
+    });
+
+    var addHistory = function(hash) {
+        if (!Modernizr.localstorage) return;
+
+        history.push(hash);
+        localStorage.setItem("history", JSON.stringify(history));
+        addHistoryMenu(hash);
+    };
+
+    var addHistoryMenu = function(hash, title) {
+        if ($('ul.history li').length > 10) return;
+        $('ul.history li.disabled').remove();
+
+        var title = title || hash;
+        var url = hash ? '#h=' + hash : 'javascript:void(null);';
+        var $item = $('<li/>');
+        if (!hash) { $item.addClass('disabled'); }
+        var $link = $('<a/>', { 'href': url });
+        $link.text(title);
+        $link.appendTo($item);
+        $item.prependTo('ul.history');
+    };
+
+    if (Modernizr.localstorage) {
+        history = JSON.parse( localStorage.getItem("history") );
+        if (history && history.length) {
+            for (var i in history) {
+                addHistoryMenu(history[i]);
+            }
+        } else {
+            history = [];
+            addHistoryMenu(false, 'No history yet');
+        }
+    } else {
+        addHistoryMenu(false, 'Unavailable');
     }
 
 };

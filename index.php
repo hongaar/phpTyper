@@ -25,6 +25,9 @@
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link rel="icon" href="favicon.ico" type="image/x-icon">
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -41,10 +44,21 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href="#">phpTyper</a>
+                    <a class="brand" href="javascript:void(null);">phpTyper</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class=""><a href="javascript:window.location.href='#';window.location.reload(true);">New document</a></li>
+                            <li class="">
+                                <a href="javascript:window.location.href='#';window.location.reload(true);">
+                                    New document
+                                </a>
+                            </li>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    History
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu history"></ul>
+                            </li>
                         </ul>
                         <ul class="nav pull-right">
                             <li class="">

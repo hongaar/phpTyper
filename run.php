@@ -31,8 +31,8 @@
 
     // init the sandbox
     $sandbox = new PHPSandbox(array(
-        'display_errors' => 'off',
-        'log_to_file' => true,
+        'display_errors' => 'log_to_file',
+        'off' => true,
         'tmp_dir' => __DIR__ . DS . 'tmp',
         'directory_protection_allow_tmp' => false,
         'auto_prepend_file' => realpath('tmp' . DS . 'phpsandbox-prepend.php'),
@@ -84,6 +84,20 @@ function getDocStyle() {
 }
 
 /**************
+ * HELPER
+ **************/
+
+function getHash() {
+    $hash = $_GET['hash'];
+    $valid = preg_match("/^[a-zA-Z0-9]*$/", $hash);
+    if ($valid === 1) {
+        return $hash;
+    } else {
+        die('Go hack yourself please');
+    }
+}
+
+/**************
  * BY CODE
  **************/
 
@@ -91,7 +105,7 @@ function getDocStyle() {
         $code = $_GET['code'];
 
         if (isset($_GET['hash'])) {
-            $hash = $_GET['hash'];
+            $hash = getHash();
             $filename = $CODE_DIR . $hash . '.php';
         } else {
             do {
@@ -107,10 +121,13 @@ function getDocStyle() {
  **************/
 
     } else if (isset($_GET['hash'])) {
-        $hash = $_GET['hash'];
+        $hash = getHash();
         $filename = $CODE_DIR . $hash . '.php';
 
         if (!file_exists($filename)) {
+            header("HTTP/1.0 404 Not Found");
+            header("Status: 404 Not Found");
+
             die("File not found");
         } else {
             $code = file_get_contents($filename);
