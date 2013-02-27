@@ -1,5 +1,15 @@
 $(document).ready(function() {
 
+    Modernizr.load({
+        test: window.btoa && window.atob,
+        nope: 'js/vendor/base64.min.js',
+        complete: phpTyper
+    });
+
+});
+
+var phpTyper = function() {
+
     // Cache
     var $textarea = $('.editor textarea');
     var $output = $('.output');
@@ -70,11 +80,18 @@ $(document).ready(function() {
         var alertElm = $(".output-pane .alert");
         alertElm.find('h4').text(title);
         alertElm.find('p').text(text);
-        alertElm.addClass('in');
+        alertElm.show();
+        if (Modernizr.opacity) {
+            alertElm.addClass('in');
+        }
     };
 
     var hideAlert = function() {
-        $('.output-pane .alert').removeClass('in');
+        if (Modernizr.opacity) {
+            $('.output-pane .alert').removeClass('in');
+        } else {
+            $('.output-pane .alert').hide();
+        }
     };
 
     // Loading
@@ -123,6 +140,7 @@ $(document).ready(function() {
     var createIframe = function(parent, html) {
         iframeElm = $('<iframe />');
         iframeElm.attr('src', 'empty.html');
+        iframeElm.attr('frameBorder', "0");
         iframeElm.appendTo(parent);
         iframeElm.on('load', function () {
             setTimeout(function() {
@@ -195,4 +213,4 @@ $(document).ready(function() {
         runFromHash();
     }
 
-});
+};
