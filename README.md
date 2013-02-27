@@ -12,5 +12,5 @@ Install
 -------
 
  - Download the [PHP documentation](http://www.php.net/download-docs.php) to the `doc/php-chunked-xhtml` directory.
- - The `tmp` and `code` directories should be writable.
+ - The `tmp` and `code` directories should be writable, but restrict access to the `.htaccess` file in both these directories.
  - Make sure you understand what you are doing. Generally, giving untrusted users access to your execution environment is not a good idea.
