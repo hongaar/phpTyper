@@ -59,6 +59,10 @@ function phpDocFromError($description) {
 
 function getDocStyle() {
     return "<style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
         body {
             color: #666;
             font-family: sans-serif;
@@ -141,7 +145,7 @@ function getDocStyle() {
         $return = array(
             'hash' => $hash,
             'time' => $sandbox->runTime(),
-            'output' => base64_encode($output)
+            'output' => base64_encode(getDocStyle() . $output)
         );
         if (!isset($_GET['code'])) {
             $return['code'] = base64_encode($code);

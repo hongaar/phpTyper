@@ -115,6 +115,7 @@ var phpTyper = function() {
             if (data = $.parseJSON(jqXHR.responseText)) {
                 setOutput(data);
                 setErrorLine(data.error.line);
+                $('span.time').text('');
                 showAlert(data.error.message, ''); // We highlighted the line which caused this error
                 var alertHeight = $(".output-pane .alert").height() + 55;
                 $output.find('iframe').css({
