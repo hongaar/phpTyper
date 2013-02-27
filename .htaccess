@@ -75,6 +75,14 @@
   </FilesMatch>
 </IfModule>
 
+# ----------------------------------------------------------------------
+# Iframe access
+# ----------------------------------------------------------------------
+
+<IfModule mod_headers.c>
+  Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
+
 
 # ----------------------------------------------------------------------
 # Proper MIME type for all files
