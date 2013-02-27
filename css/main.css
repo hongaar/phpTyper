@@ -23,9 +23,10 @@
         }
 
             .CodeMirror-focused .cm-matchhighlight {
-                background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
+                /*background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFklEQVQI12NgYGBgkKzc8x9CMDAwAAAmhwSbidEoSQAAAABJRU5ErkJggg==);
                 background-position: bottom;
-                background-repeat: repeat-x;
+                background-repeat: repeat-x;*/
+                background-color: rgba(24,24,128,0.4);
             }
 
             .CodeMirror-activeline-background {
