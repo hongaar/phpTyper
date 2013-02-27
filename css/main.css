@@ -20,6 +20,7 @@
 
         .editor-pane .editor .CodeMirror {
             min-height: 200px;
+            background-color: black;
         }
 
             .CodeMirror-focused .cm-matchhighlight {
@@ -35,7 +36,7 @@
 
             .CodeMirror .error,
             .error .CodeMirror-activeline-background {
-                background: #f00 !important;
+                background: #ff0039 !important;
             }
 
             .CodeMirror .error * {
