@@ -197,7 +197,7 @@ echo 'Hello world';</div>
 
         <script src="js/vendor/bootstrap.min.js"></script>
 
-        <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+        <script src="//d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
