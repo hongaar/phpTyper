@@ -20,13 +20,18 @@
     // require the sandbox lib
     require_once 'lib/PHPSandbox/phpsandbox.php';
 
+    // empty tmp directory
+    foreach(glob('tmp' . DS . '*') as $file) {
+        unlink($file);
+    }
+
     // copy prepend and append files to tmp directory
     copy('lib' . DS . 'PHPSandbox' . DS . 'phpsandbox-prepend.php', 'tmp' . DS . 'phpsandbox-prepend.php');
     copy('lib' . DS . 'PHPSandbox' . DS . 'phpsandbox-append.php', 'tmp' . DS . 'phpsandbox-append.php');
 
     // init the sandbox
     $sandbox = new PHPSandbox(array(
-        'display_errors' => 'on',
+        'display_errors' => 'off',
         'log_to_file' => true,
         'tmp_dir' => __DIR__ . DS . 'tmp',
         'directory_protection_allow_tmp' => false,

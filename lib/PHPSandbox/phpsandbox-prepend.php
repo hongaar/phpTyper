@@ -229,7 +229,12 @@ class Error
     public static function captureException($exception)
     {
         // Display content $exception variable
-        self::showError($exception);
+        $error = array(
+            'type' => $exception->getCode(),
+            'message' => 'Uncaught ' . get_class($exception) . ': ' . $exception->getMessage(),
+            'line' => $exception->getLine()
+        );
+        self::showError($error);
     }
 
     // UNCATCHABLE ERRORS
