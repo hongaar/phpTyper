@@ -1,0 +1,175 @@
+<?php
+
+/**************
+ * CONFIGURATION
+ **************/
+
+$CODE_DIR = 'code' . DIRECTORY_SEPARATOR;
+$DOC_DIR = 'doc' . DIRECTORY_SEPARATOR . 'php-chunked-xhtml' . DIRECTORY_SEPARATOR;
+
+/**************
+ * ERROR HANDLING
+ **************/
+
+class Error
+{
+    // CATCHABLE ERRORS
+    public static function captureNormal($number, $message, $file, $line)
+    {
+        // Insert all in one table
+        $error = array(
+            'type' => $number,
+            'message' => $message,
+            'line' => $line
+        );
+        // Display content $error variable
+        self::showError($error);
+    }
+
+    // EXTENSIONS
+    public static function captureException($exception)
+    {
+        // Display content $exception variable
+        self::showError($exception);
+    }
+
+    // UNCATCHABLE ERRORS
+    public static function captureShutdown()
+    {
+        $error = error_get_last();
+        if ($error) {
+            unset($error['file']);
+            // IF YOU WANT TO CLEAR ALL BUFFER, UNCOMMENT NEXT LINE:
+            // ob_end_clean( );
+
+            // Display content $error variable
+            self::showError($error);
+        } else { return true; }
+    }
+
+    public static function showError($error)
+    {
+        error($error);
+    }
+}
+
+function phpDocFromError($description) {
+    global $DOC_DIR;
+
+    $allFunctions = get_defined_functions();
+    $allFunctions = $allFunctions['internal'];
+
+    foreach($allFunctions as $function) {
+        if (strpos($description, $function . '(') !== false) {
+            $function = str_replace('_', '-', $function);
+            $docfilename = $DOC_DIR . 'function.' . $function . '.html';
+            if (file_exists($docfilename)) {
+                return getDocStyle() . file_get_contents($docfilename);
+            }
+        }
+    }
+    return '';
+}
+
+function getDocStyle() {
+    return "<style>body { color: #666; font-family: sans-serif; font-size: 0.8em;</style>";
+}
+
+ini_set( 'display_errors', 0 );
+error_reporting( -1 );
+
+/**************
+ * BY CODE
+ **************/
+
+if (isset($_GET['code'])) {
+    $code = $_GET['code'];
+
+    if (isset($_GET['hash'])) {
+        $hash = $_GET['hash'];
+        $filename = $CODE_DIR . $hash . '.php';
+    } else {
+        do {
+            $hash = substr(md5(time()), 0, 5);
+            $filename = $CODE_DIR . $hash . '.php';
+        } while (file_exists($filename));
+    }
+
+    file_put_contents($filename, $code);
+
+/**************
+ * BY HASH
+ **************/
+
+} else if (isset($_GET['hash'])) {
+    $hash = $_GET['hash'];
+    $filename = $CODE_DIR . $hash . '.php';
+
+    if (!file_exists($filename)) {
+        die("File not found");
+    } else {
+        $code = file_get_contents($filename);
+    }
+}
+
+/**************
+ * RETURN FUNCTION
+ **************/
+
+function error($error) {
+    global $hash, $code;
+    $return = array(
+        'hash' => $hash,
+        'error' => $error,
+        'output' => ''
+    );
+    if (!isset($_GET['code'])) {
+        $return['code'] = base64_encode($code);
+    }
+    if (isset($error['message'])) {
+        $return['output'] = base64_encode(phpDocFromError($error['message']));
+    }
+
+    header("HTTP/1.0 500 Internal Server Error");
+    header("Status: 500 Internal Server Error");
+
+    ob_end_clean();
+    echo json_encode($return);
+    exit;
+}
+
+function write($output) {
+    global $hash, $code;
+    $return = array(
+        'hash' => $hash,
+        'output' => base64_encode($output)
+    );
+    if (!isset($_GET['code'])) {
+        $return['code'] = base64_encode($code);
+    }
+    ob_end_clean();
+    echo json_encode($return);
+    exit;
+}
+
+/**************
+ * ONLY SHOW ERRORS IN CUSTOM CODE
+ **************/
+
+set_error_handler( array( 'Error', 'captureNormal' ) );
+set_exception_handler( array( 'Error', 'captureException' ) );
+register_shutdown_function( array( 'Error', 'captureShutdown' ) );
+
+/**************
+ * INCLUDE FILE
+ **************/
+
+ob_start();
+    include $filename;
+$output = ob_get_clean();
+
+/**************
+ * OUTPUT RESULT
+ **************/
+
+write($output);
